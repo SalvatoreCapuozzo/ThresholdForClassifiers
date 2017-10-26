@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <dirent.h>
+//#define test 
 
 void programmma(char* argv);
 
@@ -55,11 +56,12 @@ int u=5000;
 void programmma(char* argv) {
 	n=0;
 	int scartati[N+1];
+	int scartati_e[N+1];
 	int esatti[N+1];
 	int sbagliati[N+1];
 
-	for(int i=0;i<N+1;i++)
-	sbagliati[i]=esatti[i]=scartati[i]=0;
+	for(int i=0;i<N+1;i++)sbagliati[i]=esatti[i]=scartati[i]=0;
+	
 	string nome_file;
 
 //	cout<<"programma di test\n";
@@ -93,8 +95,6 @@ p=fopen(&nome_file[0],"r");
 	//cout<<"inserisci il file su cui vuoi salvare i dati (nomefile.csv) : ";
 		//	cin>>nome_file;
 
-	
-	
 	nome_file=argv;
 	
 
@@ -115,6 +115,7 @@ f1();
 n=n-2;
 int ii=0;
 
+#ifdef test
 for(int i=0;i<u;i++){
 	if(p){
 		memset (app.attuale,0.0,n);
@@ -147,15 +148,47 @@ for(int i=0;i<u;i++){
 	}
 }
 
+#else 
+
+int i=0;
+
+	while(!feof(p)){
+		i++;
+		memset (app.probabilita,0.0,n);
+		f1(app.attuale);
+		f1(&app);
+		f1(app.probabilita);
+		
+		if(!control(&app)){
+		cout<<"\nErrore ! i= "<<i<<"\n";
+		}
+		for(int j=0;j<N+1;j++){		
+		if(app.p_max>=(1.0*j)/N){
+			if(app.corretto)esatti[j]++;
+			else sbagliati[j]++;
+		}
+		else {
+		if(app.corretto)scartati_e[j]++;
+		else scartati[j]++;
+		}
+		}
+	
+
+}
+
+#endif
+
+
 
 }
 	else cout<<"errore file non aperto!";
 fclose(p);
+
 char s1;
 
 
-	cout<<"\ncoef;\t"<<"scartati"<<";\t"<<"esatti;"<<"\t"<<"\tsbagliati"<<";"<<"  \t  precisione;"<<endl;
-		fprintf(csv,"coef;scartati;esatti;sbagliati;precisione;\n");
+	cout<<"\ncoef;\t"<<"scartati"<<";\t"<<"esatti;"<<"\t"<<"\tsbagliati"<<";"<<"  \t  precisione;"<<"  \t  accuratezza;"<<endl;
+		fprintf(csv,"coef;scartati;esatti;sbagliati;precisione;accuratezza;\n");
 	
 for(int j=0;j<N+1;j++){
 
@@ -164,7 +197,7 @@ for(int j=0;j<N+1;j++){
 		//cout<<"precisionerattezza= "<<precisione<<endl;
 		
 			char str[100];
-		printf("%.1f; \t%8d;  \t%6d;   \t %6d; \t\t%.3f;\n",j/(N*1.0),scartati[j],esatti[j],sbagliati[j],precisione);
+		printf("%.1f; \t%8d;  \t%6d;   \t %6d; \t\t%.3f; \t%d\n",j/(N*1.0),scartati[j],esatti[j],sbagliati[j],precisione,scartati_e[j]);
 		sprintf(str,"%f;%d;%d;%d;%f;\n",j/(N*1.0),scartati[j],esatti[j],sbagliati[j],precisione);
 		//cout<<i<<";"<<scartati<<";"<<esatti<<";"<<sbagliati<<";"<<precisione<<endl;
 	char * pch2;
@@ -207,6 +240,7 @@ void fine(analis* list){
 		int scartati=0;
 		int esatti=0;
 		int sbagliati=0;
+		
 		for(int j=0;j<u;j++){
 		if(list[j].p_max>=i){
 			if(list[j].corretto)esatti++;
