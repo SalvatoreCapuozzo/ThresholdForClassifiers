@@ -37,16 +37,14 @@ int main() {
 }
 
 void fine(analis* list);
-int u=900;
+int u=5000;
 
 void programmma(char* argv) {
     n = 0;
 	int scartati[N+1];
+	int scartati_e[N+1];
 	int esatti[N+1];
 	int sbagliati[N+1];
-    
-    int scartatiEsatti[N+1];
-    int scartatiSbagliati[N+1];
 
 	for(int i=0;i<N+1;i++)
         sbagliati[i]=esatti[i]=scartati[i]=scartatiEsatti[i]=scartatiSbagliati[i]=0;
@@ -89,8 +87,6 @@ void programmma(char* argv) {
 	//cout<<"inserisci il file su cui vuoi salvare i dati (nomefile.csv) : ";
 		//	cin>>nome_file;
 
-	
-	
 	nome_file=argv;
 	
     // Salvatore
@@ -152,8 +148,43 @@ void programmma(char* argv) {
     }
 
 }
+
+#else 
+
+int i=0;
+
+	while(!feof(p)){
+		i++;
+		memset (app.probabilita,0.0,n);
+		f1(app.attuale);
+		f1(&app);
+		f1(app.probabilita);
+		
+		if(!control(&app)){
+		cout<<"\nErrore ! i= "<<i<<"\n";
+		}
+		for(int j=0;j<N+1;j++){		
+		if(app.p_max>=(1.0*j)/N){
+			if(app.corretto)esatti[j]++;
+			else sbagliati[j]++;
+		}
+		else {
+		if(app.corretto)scartati_e[j]++;
+		else scartati[j]++;
+		}
+		}
+	
+
+}
+
+#endif
+
+
+
+}
 	else cout<<"errore file non aperto!";
 fclose(p);
+
 char s1;
 
 
@@ -210,6 +241,7 @@ void fine(analis* list){
 		int scartati=0;
 		int esatti=0;
 		int sbagliati=0;
+		
 		for(int j=0;j<u;j++){
 		if(list[j].p_max>=i){
 			if(list[j].corretto)esatti++;

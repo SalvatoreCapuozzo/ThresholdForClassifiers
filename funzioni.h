@@ -3,11 +3,10 @@ int n;
 FILE* p;
 char ss[1000];
 
-char a;
+//char a;
 char * pch;
 
 
-typedef string arrayHtml[100];
 
 struct analis{
 	char attuale[12];
@@ -17,14 +16,17 @@ struct analis{
 	
 };
 
-struct dato {
+struct Dato {
     int scartati;
     int esatti;
     int sbagliati;
     float accurat;
-};
+    float precisione;
+    float recall;
+    float score;
+}dato;
 
-typedef dato arrayDati[11];
+typedef Dato arrayDati[11];
 
 void f1() {
 
