@@ -1,3 +1,4 @@
+
 int n;
 FILE* p;
 char ss[1000];
@@ -32,7 +33,7 @@ void f1() {
     pch = strtok(ss,",");
     while (pch != NULL) {
         n++;
-        printf("%s\n", pch);
+        //printf("%s\n", pch);
         //sprintf(&s[0],"%s\n",pch);
         pch = strtok(NULL, ",");
     }
@@ -72,6 +73,7 @@ char * f2(arrayDati ad) {
     return pch2;
 }
 */
+
 bool control(analis* s){
 	float a=0;
 	s->p_max=0.0;
