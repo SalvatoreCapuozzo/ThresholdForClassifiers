@@ -19,7 +19,7 @@ while (dirp)
 if ((dp = readdir(dirp)) != NULL) 
 {
 k++;
-puts(dp->d_name);
+//puts(dp->d_name);
 if(k>2)programmma(dp->d_name);
 } 
 else
@@ -50,8 +50,10 @@ using namespace std;
 #include "funzioni.h"
 
 void fine(analis* list);
-int u=900;
+int u=5000;
+
 void programmma(char* argv) {
+	n=0;
 	int scartati[N+1];
 	int esatti[N+1];
 	int sbagliati[N+1];
@@ -66,7 +68,7 @@ void programmma(char* argv) {
 	nome_file=argv;
 		
 	nome_file="dati\\" + nome_file; 
-	cout<<"\nFile: "<<nome_file;
+	cout<<"\n\tFile: "<<nome_file;
 
 		
 
@@ -112,11 +114,9 @@ nome_file="risultati\\Risuttati_" + nome_file;
 f1();
 n=n-2;
 int ii=0;
+
 for(int i=0;i<u;i++){
 	if(p){
-
-
-	
 		memset (app.attuale,0.0,n);
 		f1(app.attuale);
 		f1(&app);
@@ -140,11 +140,13 @@ for(int i=0;i<u;i++){
 		//cout<<"numeri: ";	 //for(int j=0;j<n;j++)cout<<" "<<list[i].probabilita[j]<<endl;
 
 	}
+	
 	else{
 		u--;
 		cout<<"errori I= "<<i<<endl;
 	}
 }
+
 
 }
 	else cout<<"errore file non aperto!";
