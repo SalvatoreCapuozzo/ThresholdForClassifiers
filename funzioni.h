@@ -1,132 +1,54 @@
+//
+//  funzioni.h
+//  Calcolatore
+//
+//  Created by Filippo Ferrandino - Salvatore Capuozzo on 04/11/17.
+//  Copyright © 2017 Filippo Ferrandino - Salvatore Capuozzo. All rights reserved.
+//
 
-int n;
-FILE* p;
-char ss[1000];
+#ifndef funzioni_h
+#define funzioni_h
 
-//char a;
-char * pch;
+#include <dirent.h>
+#include "plotCsvFile.h"
 
+#define k 50
+#define N 10
 
-
+// Struttura rappresentante l'analisi di un singolo pacchetto
 struct analis{
-	char attuale[12];
-	bool corretto;
-	float probabilita[k];
-	float p_max;
-	
+    char attuale[12];
+    bool corretto;
+    float probabilita[k];
+    float p_max;
+    
 };
 
-struct Dato {
-    int scartati;
-    int esatti;
-    int sbagliati;
-    float accurat;
-    float precisione;
-    float recall;
-    float score;
-}dato;
+// Funzione di riconoscimento del tipo e del numero delle colonne del file csv
+void f1();
 
-typedef Dato arrayDati[11];
+// Funzione di prelevamento della stringa Attuale
+void f1(char *);
 
-void f1() {
+// Funzione di confronto delle stringhe Attuale-Risultato
+void f1(analis *);
 
-    fscanf(p,"%s",ss);
+// Funzione di prelevamento delle probabilità per tipi C&T
+void f1(float *);
 
-    pch = strtok(ss,",");
-    while (pch != NULL) {
-        n++;
-        //printf("%s\n", pch);
-        //sprintf(&s[0],"%s\n",pch);
-        pch = strtok(NULL, ",");
-    }
-			  //n--;
-}
-/*
-char * f2(arrayDati ad) {
-    fscanf(p,"%s",ss);
-    
-    pch = strtok(ss,"CellData");
-    int i = 0;
-    while (pch != NULL) {
-        //printf ("%s",pch);
+// Funzione di prelevamento delle probabilità per tipi T&C
+void f1(float *, int);
 
-        arrayHtml[i] = pch;
-        i++;
-        
-        pch = strtok(NULL, ",");
-    }
-    char * pch2;
-    strcpy(pch2, "");
-    int j = 0;
-    for (int i = 0; i < 100; i++) {
-        strcat(pch2, arrayHtml[i]);
-        strcat(pch2, ad[j]->scartati);
-        i++;
-        strcat(pch2, arrayHtml[i]);
-        strcat(pch2, ad[j]->esatti);
-        i++;
-        strcat(pch2, arrayHtml[i]);
-        strcat(pch2, ad[j]->sbagliati);
-        i++;
-        strcat(pch2, arrayHtml[i]);
-        strcat(pch2, ad[j]->accurat);
-        j++;
-    }
-    return pch2;
-}
-*/
+// Funzione di controllo sulle probabilità
+// (restituisce 'true' se la somma delle probabilità è pari a 1)
+bool control(analis *);
 
-bool control(analis* s){
-	float a=0;
-	s->p_max=0.0;
-	for (int i=0; i<n; i++) {
-		if (s->probabilita[i] > s->p_max)
-            s->p_max = s->probabilita[i];
-		a += s->probabilita[i];
-	}
-	if (a > 0.999 && a < 1.001)
-        return true;
-	cout << " a= " << a;
-	return false;
-}
+// Funzione ricorsiva di ricerca di file di tipo csv
+// (il parametro di tipo stringa serve per le cartelle contenute nella cartella 'dati')
+void searchInFolder(string);
 
-void f1(analis* s) {
+// Funzione principale che permette l'analisi dei file csv e che restituisce nuovi file
+// csv con l'elaborazione dei dati in ingresso in base all'indice di soglia
+void programma(char *, char *);
 
-    fscanf(p,"%s",ss);
-	
-    pch = strtok (ss,",");
-    while (pch != NULL) {
-			   //printf ("%s",pch);
-        if (strcmp(s->attuale,pch))
-            s->corretto = false;
-        else
-            s->corretto = true;
-        pch = strtok(NULL, ",");
-    }
-}
-
-void f1(char* s) {
-
-    fscanf(p,"%s",ss);
-	
-    pch = strtok(ss,",");
-    while (pch != NULL) {
-			   //printf ("%s",pch);
-        sprintf(s,"%s",pch);
-		
-        pch = strtok(NULL, ",");
-    }
-}
-
-void f1(float* n) {
-    int i=0;
-    fscanf(p,"%s",ss);
-	
-    pch = strtok(ss,",");
-    while (pch != NULL) {
-			   //printf ("%s\n",pch);
-        n[i++] = atof(pch);
-        pch = strtok(NULL, ",");
-    }
-}
-
+#endif /* funzioni_h */
